@@ -5,7 +5,7 @@
 ## Установка
 
 ```bash
-composer require germanovn/PHPOverDaemon
+composer require germanovn/php-overdaemon
 ```
 
 ## Использование
