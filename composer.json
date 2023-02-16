@@ -1,0 +1,33 @@
+{
+  "name": "germanovn/php-overdaemon",
+  "description": "PhpOverDaemon — daemon management solution written in PHP",
+  "keywords": ["daemon", "daemon-manager"],
+  "homepage": "https://github.com/germanovn/php-overdaemon",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Germanov Nikita"
+    }
+  ],
+  "require": {
+    "php": ">=8.0.0",
+    "psr/log": "^3.0",
+    "ext-pcntl": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "GermanovN\\OverDaemon\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "GermanovN\\OverDaemon\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  }
+}
