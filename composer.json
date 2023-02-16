@@ -9,6 +9,7 @@
       "name": "Germanov Nikita"
     }
   ],
+  "minimum-stability": "dev",
   "require": {
     "php": ">=8.0.0",
     "psr/log": "^3.0",
