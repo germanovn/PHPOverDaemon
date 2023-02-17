@@ -67,14 +67,19 @@ class MyDaemon extends StoppableDaemon implements InferiorDaemon
     {
         $this->pid = $args['pid'];
         try {
-            $this->logger->debug("Start '" . $this->name() ."' PID: {$this->pid}");
-
             // бесконечный цикл выполнения
             while ($this->isRunningDaemon()) {
-                // получение и выполнение задач
-                $this->doTask($this->getSomeLongTask());
+                // получение задачи
+                $execTime = $this->getSomeLongTask();
+                if (null === $execTime) {
+                    $this->stopDaemon(SIGSTOP);
+                    continue;
+                }
+                // выполнение задачи
+                $this->logger->debug("Start '" . $this->name() ."' PID: {$this->pid}");
+                $this->doTask($execTime);
+                $this->logger->debug("End '" . $this->name() ."' PID: {$this->pid}");
             }
-            $this->logger->debug("End '" . $this->name() ."' PID: {$this->pid}");
 
             return Daemon::EXIT_CODE_SUCCESS;
         }
@@ -88,16 +93,17 @@ class MyDaemon extends StoppableDaemon implements InferiorDaemon
     }
 
     /** @throws Exception */
-    private function getSomeLongTask(): int
+    private function getSomeLongTask(): ?int
     {
-        return random_int(1, 10) * 10;
+        $execTime = random_int(1, 10) * 10;
+        return $execTime >= 90 ? null : $execTime;
     }
 
     private function doTask(int $task): void
     {
         for ($i = 0; $i < $task; $i++) {
             $this->logger->debug($this->name() . " PID: {$this->pid} " . $i);
-            usleep(100000);
+            usleep(10000);
         }
     }
     
