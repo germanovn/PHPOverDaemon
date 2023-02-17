@@ -23,12 +23,15 @@ class OverDaemon extends StoppableDaemon implements Daemon
      * @see \GermanovN\OverDaemon\DaemonGate\InferiorDaemon
      * @var array<int, string>
      */
-    private array $launchedCollection = [];
+    private $launchedCollection = [];
 
-    private ?DaemonConfig $config;
+    /** @var DaemonConfig|null */
+    private $config;
 
-    private InferiorDaemonGate $inferiorDaemonGate;
+    /** @var InferiorDaemonGate */
+    private $inferiorDaemonGate;
 
+    /** @var callable|null */
     private $renewConnections;
 
     public function __construct(

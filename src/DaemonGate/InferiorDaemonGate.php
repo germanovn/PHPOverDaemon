@@ -10,7 +10,7 @@ use ArrayIterator;
 class InferiorDaemonGate
 {
     /** @var InferiorDaemonRepository */
-    private InferiorDaemonRepository $repository;
+    private $repository;
 
     public function __construct(InferiorDaemonRepository $repository)
     {
@@ -21,6 +21,7 @@ class InferiorDaemonGate
      * Метод подбирает из репозитория только тех демонов, которые ещё не запущены
      * @param array<int, string> $launchedCollection - коллекция уже запущенных демонов
      * @return InferiorDaemon|null
+     * @throws InferiorDaemonRepositoryException
      */
     public function getNextDaemon(array $launchedCollection): ?InferiorDaemon
     {
@@ -46,6 +47,7 @@ class InferiorDaemonGate
         return null;
     }
 
+    /** @throws InferiorDaemonRepositoryException */
     private function findIdleDaemons(array $launchedCollection): ArrayIterator
     {
         $result = [];

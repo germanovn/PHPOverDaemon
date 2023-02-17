@@ -4,7 +4,8 @@ namespace GermanovN\OverDaemon\Daemon;
 
 class SigHandler
 {
-    protected static ?SigHandler $instance = null;
+    /** @var SigHandler|null */
+    protected static $instance = null;
 
     /** @var <int, array>array  */
     private $handlers = [];

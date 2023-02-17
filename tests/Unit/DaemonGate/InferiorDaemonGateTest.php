@@ -5,6 +5,7 @@ namespace GermanovN\OverDaemon\Tests\Unit\DaemonGate;
 use GermanovN\OverDaemon\DaemonGate\InferiorDaemon;
 use GermanovN\OverDaemon\DaemonGate\InferiorDaemonGate;
 use GermanovN\OverDaemon\DaemonGate\InferiorDaemonRepository;
+use GermanovN\OverDaemon\DaemonGate\InferiorDaemonRepositoryException;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 use PHPUnit\Framework\TestCase;
 
@@ -18,6 +19,7 @@ class InferiorDaemonGateTest extends TestCase
      * @param InvokedCount $getAllInvokedCount
      * @param InferiorDaemon|null $expected
      * @return void
+     * @throws InferiorDaemonRepositoryException
      */
     public function test_getNextDaemon(
         array $launchedCollection,

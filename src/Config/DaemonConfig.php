@@ -15,19 +15,19 @@ class DaemonConfig
      * @var int Максимальное количество дочерних процессов
      * @see \GermanovN\OverDaemon\DaemonGate\InferiorDaemonGate
      */
-    protected int $max_child_processes = self::DEFAULT_MAX_CHILD_PROCESSES;
+    protected $max_child_processes = self::DEFAULT_MAX_CHILD_PROCESSES;
 
     /**
      * @var int Время прерывания в секундах между проверками освобождения стека дочерних процессов
      * @see sleep()
      */
-    protected int $delay_time_sec = self::DEFAULT_DELAY_TIME_SEC;
+    protected $delay_time_sec = self::DEFAULT_DELAY_TIME_SEC;
 
     /**
      * @var int Ограничение количества используемой памяти, чтобы демон корректно завершил работу до исключения
      * @see memory_get_usage()
      */
-    protected int $memory_limit = self::DEFAULT_MEMORY_LIMIT;
+    protected $memory_limit = self::DEFAULT_MEMORY_LIMIT;
 
     /**
      * @var bool Требуется ли перехват STDIN, STDOUT, STDERR. В случае 'true' вывод будет отправлен в '/dev/null'
@@ -35,7 +35,7 @@ class DaemonConfig
      * @see STDOUT
      * @see STDERR
      */
-    protected bool $silent = true;
+    protected $silent = true;
 
     public function getMaxChildProcesses(): int
     {
