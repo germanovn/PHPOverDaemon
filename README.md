@@ -100,6 +100,16 @@ class MyDaemon extends StoppableDaemon implements InferiorDaemon
             usleep(100000);
         }
     }
+    
+    public function beforeDevour(): bool
+    {
+        // в это методе можно обновить подключение к вашей БД
+        return true;
+    }
+
+    public function afterDevour(): void
+    {
+    }
 
     public function name(): string
     {
@@ -134,13 +144,7 @@ $repository->add(new MyDaemon());
 $daemon = new OverDaemon(
     new DaemonConfig(),
     $repository,
-    $sigHandler,
-    function () use ($db) {
-        if ($db instanceof \CDbConnection) {
-            $db->setActive(false);
-            $db->setActive(true);
-        }
-    }
+    $sigHandler
 );
 
 echo $daemon->devour();
