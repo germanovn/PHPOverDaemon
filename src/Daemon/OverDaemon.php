@@ -5,6 +5,7 @@ namespace GermanovN\OverDaemon\Daemon;
 use GermanovN\OverDaemon\Config\DaemonConfig;
 use GermanovN\OverDaemon\DaemonGate\InferiorDaemonGate;
 use GermanovN\OverDaemon\DaemonGate\InferiorDaemonRepository;
+use GermanovN\OverDaemon\DaemonGate\InferiorDaemonRepositoryException;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -31,21 +32,16 @@ class OverDaemon extends StoppableDaemon implements Daemon
     /** @var InferiorDaemonGate */
     private $inferiorDaemonGate;
 
-    /** @var callable|null */
-    private $renewConnections;
-
     public function __construct(
         DaemonConfig $config,
         InferiorDaemonRepository $repository,
         SigHandler $sigHandler,
-        callable $renewConnections = null,
         LoggerInterface $logger = null
     ) {
         $this->stdHandle($config);
         $this->checkSystem();
         $this->config = $config;
         $this->inferiorDaemonGate = new InferiorDaemonGate($repository);
-        $this->renewConnections = $renewConnections;
         parent::__construct($sigHandler, $logger);
     }
 
@@ -53,6 +49,7 @@ class OverDaemon extends StoppableDaemon implements Daemon
      * @inheritDoc
      * @param array|null $args
      * @return int application exit code
+     * @throws InferiorDaemonRepositoryException
      */
     public function devour(array $args = null): int
     {
@@ -85,11 +82,10 @@ class OverDaemon extends StoppableDaemon implements Daemon
                 elseif (0 === $pid) {
 
                     // InferiorDaemon. Запуск дочернего демона
-                    if (is_callable($this->renewConnections)) {
-                        call_user_func([$this, 'renewConnections']);
+                    if ($inferior->beforeDevour()) {
+                        $inferior->devour(['pid' => getmypid()]);
+                        $inferior->afterDevour();
                     }
-                    $inferior->devour(['pid' => getmypid()]);
-                    $this->logger->debug('Exit');
                     exit();
                 }
             }

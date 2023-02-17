@@ -12,4 +12,8 @@ interface InferiorDaemon extends Daemon
      * @return string
      */
     public function name(): string;
+
+    public function beforeDevour(): bool;
+
+    public function afterDevour(): void;
 }
