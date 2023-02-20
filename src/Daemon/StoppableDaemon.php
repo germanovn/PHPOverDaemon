@@ -11,20 +11,20 @@ use Psr\Log\NullLogger;
 abstract class StoppableDaemon
 {
     /** @var bool Флаг для корректной остановки демона */
-    private $runDaemon = true;
+    private bool $runDaemon = true;
 
     /** @var LoggerInterface|NullLogger  */
-    protected $logger;
+    protected LoggerInterface|NullLogger $logger;
 
     /** @var SigHandler|null */
-    protected $sigHandler;
+    protected ?SigHandler $sigHandler;
 
     /**
      * @var array По-умолчанию обрабатывает сигналы:
      * SIGINT - Сигнал прерывания (Ctrl-C) с терминала
      * SIGTERM - Сигнал завершения (сигнал по умолчанию для утилиты kill)
      */
-    protected $stopSigs = [
+    protected array $stopSigs = [
         SIGINT,
         SIGTERM,
     ];

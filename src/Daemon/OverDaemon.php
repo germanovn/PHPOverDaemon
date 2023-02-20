@@ -24,23 +24,19 @@ class OverDaemon extends StoppableDaemon implements Daemon
      * @see \GermanovN\OverDaemon\DaemonGate\InferiorDaemon
      * @var array<int, string>
      */
-    private $launchedCollection = [];
-
-    /** @var DaemonConfig|null */
-    private $config;
+    private array $launchedCollection = [];
 
     /** @var InferiorDaemonGate */
-    private $inferiorDaemonGate;
+    private InferiorDaemonGate $inferiorDaemonGate;
 
     public function __construct(
-        DaemonConfig $config,
+        private readonly ?DaemonConfig $config,
         InferiorDaemonRepository $repository,
         SigHandler $sigHandler,
         LoggerInterface $logger = null
     ) {
         $this->stdHandle($config);
         $this->checkSystem();
-        $this->config = $config;
         $this->inferiorDaemonGate = new InferiorDaemonGate($repository);
         parent::__construct($sigHandler, $logger);
     }

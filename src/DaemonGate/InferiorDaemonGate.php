@@ -10,7 +10,7 @@ use ArrayIterator;
 class InferiorDaemonGate
 {
     /** @var InferiorDaemonRepository */
-    private $repository;
+    private InferiorDaemonRepository $repository;
 
     public function __construct(InferiorDaemonRepository $repository)
     {
@@ -35,7 +35,7 @@ class InferiorDaemonGate
     }
 
     /**
-     * @param ArrayIterator<InferiorDaemon>|null $idleDaemons
+     * @param ArrayIterator<InferiorDaemon> $idleDaemons
      * @return InferiorDaemon|null
      */
     private function getFirstIdleDaemon(ArrayIterator $idleDaemons): ?InferiorDaemon
